@@ -3,7 +3,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 
-export default class ThongTinSV extends Component {
+class ThongTinSV extends Component {
+
+
+
+
+  
   render() {
     return (
         <div className="card p-0">
@@ -47,3 +52,12 @@ export default class ThongTinSV extends Component {
     )
   }
 }
+
+const mapStateToProps = (state)=>{
+    return {
+      ...state.userReducers,
+    }
+      
+}
+
+export default connect (mapStateToProps)(ThongTinSV);

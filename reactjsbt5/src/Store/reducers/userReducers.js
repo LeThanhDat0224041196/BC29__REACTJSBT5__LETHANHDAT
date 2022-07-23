@@ -1,12 +1,12 @@
 const DEFAULT_STATE = {
     userList: [{
-        maSV: '1',
+        id: '1',
         hoTen: 'Thanh Dat Le',
         phoneNumber: '085512123123',
         email: 'Datle@gmail.com',
     },
     {
-        maSV: '2',
+        id: '2',
         hoTen: 'Yume Nishimiya',
         phoneNumber: '09004111996',
         email: 'yumeNishi04111996@gmailcom',
@@ -20,6 +20,13 @@ const DEFAULT_STATE = {
 
 export const userReducers = (state = DEFAULT_STATE, {type, payload})=>{
     switch(type){
+
+    case 'ADD_USER_REDUCERS':{
+        const data = [...state.userList];
+        data.push((...payload, ))
+
+        return (...state)
+    }
         default:
          return state
     }

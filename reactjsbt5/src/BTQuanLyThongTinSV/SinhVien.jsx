@@ -1,6 +1,32 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 
-export default class SinhVien extends Component {
+
+class SinhVien extends Component {
+  
+  renderUserList = ()=>{
+    // console.log(this.props);
+    return this.props.userReducers.userList.map ((ele, idx)=>{
+      const {id, hoTen, phoneNumber, email} = ele;
+      return(
+        <tr key={id} className={`${idx % 2 === 0 &&'bg-light'}`}>
+            <td>{idx+1}</td>
+            <td>{hoTen}</td>
+            <td>{phoneNumber}</td>
+            <td>{email}</td>
+            <td>
+              <button onClick={()=>this.props.dispatch({
+                type: 'ADD_USER_REDUCERS',
+                payload: ele,
+              })} className="btn btn-info mr-2">EDIT</button>
+              <button className="btn btn-danger">DELETE</button>
+            </td>
+        </tr>
+      );
+    })
+  }
+  
+  
   render() {
     return (
         <div className="card p-0 mt-3">
@@ -27,26 +53,7 @@ export default class SinhVien extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr className='bg-light'>
-                  <td>1</td>
-                  <td>Thanh Dat Le</td>
-                  <td>085512123123</td>
-                  <td>Dat.Le@gmail.com</td>
-                  <td>
-                    <button className="btn btn-info mr-2">EDIT</button>
-                    <button className="btn btn-danger">DELETE</button>
-                  </td>
-                </tr>
-                <tr className='bg-light'>
-                  <td>2</td>
-                  <td>Yume Nishimiya</td>
-                  <td>09004111996</td>
-                  <td>yumeNishi04111996@gmailcom</td>
-                  <td>
-                    <button className="btn btn-info mr-2">EDIT</button>
-                    <button className="btn btn-danger">DELETE</button>
-                  </td>
-                </tr>
+                {this.renderUserList()}
               </tbody>
             </table>
           </div>
@@ -54,3 +61,11 @@ export default class SinhVien extends Component {
     )
   }
 }
+
+const mapStateToProps = (state)=>{
+  return( {
+    ...state,
+  })
+};
+
+export default connect (mapStateToProps)(SinhVien);
