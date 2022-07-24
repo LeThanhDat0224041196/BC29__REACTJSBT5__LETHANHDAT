@@ -16,7 +16,7 @@ class SinhVien extends Component {
             <td>{email}</td>
             <td>
               <button onClick={()=>this.props.dispatch({
-                type: 'ADD_USER_REDUCERS',
+                type: 'SET_USER_REDUCERS',
                 payload: ele,
               })} className="btn btn-info mr-2">EDIT</button>
               <button className="btn btn-danger">DELETE</button>

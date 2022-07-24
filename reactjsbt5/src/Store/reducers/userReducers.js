@@ -20,13 +20,15 @@ const DEFAULT_STATE = {
 
 export const userReducers = (state = DEFAULT_STATE, {type, payload})=>{
     switch(type){
-
-    case 'ADD_USER_REDUCERS':{
+    case 'ADD_USERS': {
         const data = [...state.userList];
-        data.push((...payload, ))
-
-        return (...state)
+        data.push({...payload,  id: Date.now()});
+        return {...state}
     }
+    case 'SET_USER_REDUCERS':{
+        return {...state, selectedUser:payload}
+    }    
+    
         default:
          return state
     }
