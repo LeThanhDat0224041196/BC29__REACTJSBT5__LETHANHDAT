@@ -6,7 +6,7 @@ class SinhVien extends Component {
   
   renderUserList = ()=>{
     // console.log(this.props);
-    return this.props.userReducers.userList.map ((ele, idx)=>{
+    return this.props.userList.map((ele, idx)=>{
       const {id, hoTen, phoneNumber, email} = ele;
       return(
         <tr key={id} className={`${idx % 2 === 0 &&'bg-light'}`}>
@@ -42,7 +42,7 @@ class SinhVien extends Component {
             </div>
           </div>
           <div className="card-body">
-            <table class="table">
+            <table className='table'>
               <thead>
                 <tr>
                   <th>Mã SV</th>
@@ -64,7 +64,7 @@ class SinhVien extends Component {
 
 const mapStateToProps = (state)=>{
   return( {
-    ...state,
+    ...state.userReducers,
   })
 };
 

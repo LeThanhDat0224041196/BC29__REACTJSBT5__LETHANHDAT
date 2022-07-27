@@ -30,8 +30,16 @@ handleChange = (event)=>{
   })
 };
 
-handleSubmit = ()=>{
+handleSubmit = (event)=>{
+  event.preventDefault();
 
+  for(const key in this.state.error){
+    const message = this.state.error[key];
+
+    if(message){
+      return; 
+    }
+  }
 
   this.props.dispatch({
     type: 'ADD_USERS',
@@ -39,7 +47,17 @@ handleSubmit = ()=>{
   })
 }
 
-handleBlur = ()=>{};
+handleBlur = (event)=>{
+  const {name, message} = event.target;
+
+  
+  this.setState({
+    error:{
+      ...this.state.error,
+      [name]: message,
+    }
+  })
+};
 
 
   
@@ -50,37 +68,65 @@ handleBlur = ()=>{};
           Thông tin sinh viên
         </div>
         <div className="card-body">
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className="row">
               <div className="col-6">
-                <div className="form-group" onSubmit={this.handleSubmit}>
+                <div className="form-group" >
                   <label>Mã SV</label>
-                  <input type="text" className="form-control" onChange={this.handleChange}/>
+                  <input 
+                  title='id'
+                  required 
+                  type="text"
+                  name='id' 
+                  className="form-control" 
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}/> 
+                  {this.state.error.maSV}
                 </div>
               </div>
               <div className="col-6">
                 <div className="form-group">
                   <label>Họ Tên</label>
-                  <input type="text" className="form-control" onChange={this.handleChange}/>
+                  <input 
+                  title='Họ và Tên'
+                  required
+                  name='hoTen'
+                  type="text" 
+                  className="form-control" 
+                  onChange={this.handleChange}/>
+                  {this.state.error.hoTen}
                 </div>
               </div>
               <div className="col-6">
                 <div className="form-group">
                   <label>Số điện thoại</label>
-                  <input type="text" className="form-control" onChange={this.handleChange}/>
+                  <input 
+                  title='Số điện thoại'
+                  name='phoneNumber'
+                  required
+                  type="text" 
+                  className="form-control" 
+                  onChange={this.handleChange}/>
+                  {this.state.error.phoneNumber}
                 </div>
               </div>
               <div className="col-6">
                 <div className="form-group">
                   <label>Email</label>
-                  <input type="text" className="form-control" onChange={this.handleChange}/>
+                  <input 
+                  type="text" 
+                  name='email'
+                  title='Email'
+                  className="form-control" 
+                  onChange={this.handleChange}/>
+                  {this.state.error.email}
                 </div>
               </div>
             </div>
           </form>
         </div>
         <div className="card-footer text-muted">
-          <button className="btn btn-success mr-2" onChange={this.handleChange} >Thêm sinh viên</button>
+          <button className="btn btn-success mr-2">Thêm sinh viên</button>
         </div>
       </div>
     )

@@ -23,10 +23,11 @@ export const userReducers = (state = DEFAULT_STATE, {type, payload})=>{
     case 'ADD_USERS': {
         const data = [...state.userList];
         data.push({...payload,  id: Date.now()});
+        state.userList = data;
         return {...state}
     }
     case 'SET_USER_REDUCERS':{
-        return {...state, selectedUser:payload}
+        return {...state, selectedUsers:payload}
     }    
     
         default:
