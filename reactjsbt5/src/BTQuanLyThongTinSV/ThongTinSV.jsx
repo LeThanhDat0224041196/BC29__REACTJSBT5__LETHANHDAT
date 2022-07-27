@@ -48,8 +48,23 @@ handleSubmit = (event)=>{
 }
 
 handleBlur = (event)=>{
-  const {name, message} = event.target;
+  const {name, title, minLength, maxLength, validity:{
+    valueMissing, patternMismatch, tooLong, tooShort 
+  } } = event.target;
 
+  let message = '';
+
+  if(patternMismatch){
+      message = `${title} is invalid partern.`;
+  }
+
+  if(valueMissing){
+      message = `${title} is required`;
+  }
+
+  if(tooLong || tooShort){
+      message = `${title} from ${minLength} - ${maxLength} is required`;
+  }
   
   this.setState({
     error:{
@@ -68,20 +83,21 @@ handleBlur = (event)=>{
           Thông tin sinh viên
         </div>
         <div className="card-body">
-          <form onSubmit={this.handleSubmit}>
+          <form noValidate onSubmit={this.handleSubmit}>
             <div className="row">
               <div className="col-6">
                 <div className="form-group" >
-                  <label>Mã SV</label>
+                  <label>ID</label>
                   <input 
-                  title='id'
+                  title='Id'
                   required 
                   type="text"
                   name='id' 
                   className="form-control" 
                   onChange={this.handleChange}
                   onBlur={this.handleBlur}/> 
-                  {this.state.error.maSV}
+                  {this.state.error.id
+                  && (<span className='text-danger'>{this.state.error.id}</span>)}
                 </div>
               </div>
               <div className="col-6">
@@ -91,10 +107,14 @@ handleBlur = (event)=>{
                   title='Họ và Tên'
                   required
                   name='hoTen'
-                  type="text" 
+                  type="text"
+                  minLength={4}
+                  maxLength={12}
                   className="form-control" 
-                  onChange={this.handleChange}/>
-                  {this.state.error.hoTen}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}/>
+                  {this.state.error.hoTen
+                  && (<span className='text-danger'>{this.state.error.hoTen}</span>)}
                 </div>
               </div>
               <div className="col-6">
@@ -106,27 +126,33 @@ handleBlur = (event)=>{
                   required
                   type="text" 
                   className="form-control" 
-                  onChange={this.handleChange}/>
-                  {this.state.error.phoneNumber}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}/>
+                  {this.state.error.phoneNumber
+                   && (<span className='text-danger'>{this.state.error.phoneNumber}</span>)}
                 </div>
               </div>
               <div className="col-6">
                 <div className="form-group">
                   <label>Email</label>
                   <input 
+                  required
                   type="text" 
                   name='email'
                   title='Email'
+                  pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.]{1}[a-zA-Z]{2,}$'
                   className="form-control" 
-                  onChange={this.handleChange}/>
-                  {this.state.error.email}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}/>
+                  {this.state.error.email
+                  && (<span className='text-danger'>{this.state.error.email}</span>)}
                 </div>
               </div>
             </div>
+            <div className="card-footer text-muted">
+              <button className="btn btn-success mr-2">Thêm sinh viên</button>
+            </div>
           </form>
-        </div>
-        <div className="card-footer text-muted">
-          <button className="btn btn-success mr-2">Thêm sinh viên</button>
         </div>
       </div>
     )

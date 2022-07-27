@@ -45,7 +45,7 @@ class SinhVien extends Component {
             <table className='table'>
               <thead>
                 <tr>
-                  <th>Mã SV</th>
+                  <th>ID</th>
                   <th>Họ Tên</th>
                   <th>Số điện thoại</th>
                   <th>Email</th>
