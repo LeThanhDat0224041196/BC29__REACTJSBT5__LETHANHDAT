@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 
 import { connect } from 'react-redux';
 
@@ -20,6 +20,8 @@ state = {
   }
 };
 
+formRef = createRef();
+
 handleChange = (event)=>{
   const {name, value} = event.target;
   this.setState({
@@ -33,12 +35,19 @@ handleChange = (event)=>{
 handleSubmit = (event)=>{
   event.preventDefault();
 
-  for(const key in this.state.error){
-    const message = this.state.error[key];
+  // console.log(event.target.checkValidity());
 
-    if(message){
-      return; 
-    }
+  // for(const key in this.state.error){
+  //   const message = this.state.error[key];
+
+  //   if(message){
+  //     return; 
+  //   }
+  // }
+  
+
+  if(!event.target.checkValidity()){
+    return;
   }
 
   this.props.dispatch({
@@ -83,7 +92,7 @@ handleBlur = (event)=>{
           Thông tin sinh viên
         </div>
         <div className="card-body">
-          <form noValidate onSubmit={this.handleSubmit}>
+          <form ref={this.formRef} noValidate onSubmit={this.handleSubmit}>
             <div className="row">
               <div className="col-6">
                 <div className="form-group" >
@@ -150,7 +159,7 @@ handleBlur = (event)=>{
               </div>
             </div>
             <div className="card-footer text-muted">
-              <button className="btn btn-success mr-2">Thêm sinh viên</button>
+              <button className="btn btn-success mr-2" disabled={this.formRef.current.checkValidity()}>Thêm sinh viên</button>
             </div>
           </form>
         </div>
