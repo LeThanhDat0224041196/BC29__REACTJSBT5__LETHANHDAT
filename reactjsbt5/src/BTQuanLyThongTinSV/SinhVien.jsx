@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 
 
 class SinhVien extends Component {
-  
+  state={
+    keyword: '',
+  }
   renderUserList = ()=>{
+    let data = this.props.userList.filter((ele)=>{
+      return(
+        ele.hoTen
+        .toLowerCase()
+        .trim()
+        .indexOf(this.state.keyword.toLowerCase().trim()) !== -1
+      );
+    });
+
     // console.log(this.props);
-    return this.props.userList.map((ele, idx)=>{
+    return data.map((ele, idx)=>{
       const {id, hoTen, phoneNumber, email} = ele;
       return(
         <tr key={id} className={`${idx % 2 === 0 &&'bg-light'}`}>
@@ -19,10 +30,21 @@ class SinhVien extends Component {
                 type: 'SET_USER_REDUCERS',
                 payload: ele,
               })} className="btn btn-info mr-2">EDIT</button>
-              <button className="btn btn-danger">DELETE</button>
+              <button className="btn btn-danger"
+              onClick={()=>this.props.dispatch({
+                type: 'DELETED_USER_REDUCERS',
+                payload: ele.id,
+              })}>DELETE</button>
             </td>
         </tr>
       );
+    })
+  }
+
+  handleChange = (event)=>{
+    const {name, value} = event.target;
+    this.setState({
+      [name]: value
     })
   }
   
@@ -33,9 +55,10 @@ class SinhVien extends Component {
           <div className="row mt-4 px-3 ">
             <div className="col-4">
               <div className="form-group mb-0">
-                <input
+                <input onChange={this.handleChange}
                   type="text"
-                  placeholder="Search by full name..."
+                  name='keyword'
+                  placeholder="Search by Họ Tên..."
                   className="form-control"
                 />
               </div>

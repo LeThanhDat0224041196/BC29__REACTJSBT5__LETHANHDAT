@@ -28,7 +28,11 @@ export const userReducers = (state = DEFAULT_STATE, {type, payload})=>{
     }
     case 'SET_USER_REDUCERS':{
         return {...state, selectedUsers:payload}
-    }    
+    }
+    case 'DELETED_USER_REDUCERS':{
+        state.userList = state.userList.filter((ele)=> ele.id !== payload)
+        return {...state}
+    }   
     
         default:
          return state
