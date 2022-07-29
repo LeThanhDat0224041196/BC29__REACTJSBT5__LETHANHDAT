@@ -159,7 +159,7 @@ handleBlur = (event)=>{
               </div>
             </div>
             <div className="card-footer text-muted">
-              <button className="btn btn-success mr-2" disabled={this.formRef.current.checkValidity()}>Thêm sinh viên</button>
+              <button disabled={!this.formRef.current?.checkValidity()} className="btn btn-success mr-2">Thêm sinh viên</button>
             </div>
           </form>
         </div>
@@ -168,11 +168,11 @@ handleBlur = (event)=>{
   }
 }
 
-// const mapStateToProps = (state)=>{
-//     return {
-//       ...state.userReducers
-//     }
+const mapStateToProps = (state)=>{
+    return {
+      ...state.userReducers
+    }
       
-// }
+}
 
-export default connect ()(ThongTinSV);
+export default connect (mapStateToProps)(ThongTinSV);
